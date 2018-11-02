@@ -5,29 +5,33 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FoodOrders.Models;
+using FoodOrders.Data;
+using FoodOrders.Models.HomeViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodOrders.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ApplicationDbContext _db;
+
+        public HomeController(ApplicationDbContext db)
         {
-            return View();
+            _db =db;
         }
 
-        public IActionResult About()
+        public async Task<IActionResult> Index()
         {
-            ViewData["Message"] = "Your application description page.";
+            IndexViewModel IndexVM = new IndexViewModel()
+            {
+                MenuItem = await _db.MenuItem.Include(m => m.Category).Include(m => m.SubCategory).ToListAsync(),
+                Category = _db.Category.OrderBy(c => c.DisplayOrder),
+                Coupons = _db.Coupons.Where(c => c.isActive == true).ToList()
+            };
+            return View(IndexVM);
 
-            return View();
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
 
         public IActionResult Error()
         {
