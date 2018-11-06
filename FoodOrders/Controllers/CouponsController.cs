@@ -12,7 +12,7 @@ using FoodOrders.Utility;
 
 namespace FoodOrders.Controllers
 {
-    //[Authorize(Roles = SD.AdminEndUser)]
+    [Authorize(Roles = SD.AdminEndUser)]
     public class CouponsController : Controller
     {
         private readonly ApplicationDbContext _db;

@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FoodOrders.Data;
 using FoodOrders.Models;
+using Microsoft.AspNetCore.Authorization;
+using FoodOrders.Utility;
 
 namespace FoodOrders.Controllers
 {
+    [Authorize(Roles = SD.AdminEndUser)]
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;

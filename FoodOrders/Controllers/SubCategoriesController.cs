@@ -8,11 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using FoodOrders.Data;
 using FoodOrders.Models;
 using FoodOrders.Models.SubCategoryViewModels;
-
-
+using Microsoft.AspNetCore.Authorization;
+using FoodOrders.Utility;
 
 namespace FoodOrders.Controllers
 {
+    [Authorize(Roles = SD.AdminEndUser)]
+
     public class SubCategoriesController : Controller
     {
         

@@ -7,6 +7,7 @@ using FoodOrders.Data;
 using FoodOrders.Models;
 using FoodOrders.Models.MenuItemViewModels;
 using FoodOrders.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,6 +15,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FoodOrders.Controllers
 {
+    [Authorize(Roles = SD.AdminEndUser)]
+
     public class MenuItemsController : Controller
     {
 
