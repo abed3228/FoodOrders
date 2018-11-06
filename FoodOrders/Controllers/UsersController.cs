@@ -106,7 +106,7 @@ namespace FoodOrders.Controllers
             userFromDb.FirstName = model.FirstName;
             userFromDb.LastName = model.LastName;
             userFromDb.PhoneNumber = model.PhoneNumber;
-            userFromDb.LockoutEnd = DateTime.Now.AddYears(100);
+            userFromDb.LockoutEnd = DateTime.Now.AddYears(1);
             userFromDb.LockoutEnabled = model.LockoutEnabled;
             userFromDb.AccessFailedCount = model.AccessFailedCount;
             userFromDb.LockoutReason = model.LockoutReason;

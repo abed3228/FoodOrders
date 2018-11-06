@@ -13,6 +13,9 @@
         <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
         <link rel="stylesheet" href="~/css/jquery-ui.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.css" />
+        <link rel="stylesheet" href="~/css/Typeahead.css" />
+
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -21,6 +24,10 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
         <link rel="stylesheet" href="~/css/jquery-ui.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css" />
+        <link rel="stylesheet" href="~/css/Typeahead.css" />
+
+
     </environment>
 
 
@@ -36,7 +43,7 @@
 
                 @if (User.IsInRole(SD.AdminEndUser) || User.IsInRole(SD.CustomerEndUser))
                 {
-                    <li class="nav-item"><a class="nav-link" href="#">Order history</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-action="OrderHistory" asp-controller="Order">Order history</a></li>
                 }
                 @if (User.IsInRole(SD.AdminEndUser))
                 {
@@ -62,9 +69,8 @@
                             Order
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Manage order</a>
-                            <a class="dropdown-item" href="#">Order pickup</a>
-                            <a class="dropdown-item" href="#">Download order Details</a>
+                            <a class="dropdown-item" asp-action="ManageOrder" asp-controller="Order">Manage order</a>
+                            <a class="dropdown-item" asp-action="OrderPickup" asp-controller="Order">Order pickup</a>
                         </div>
                     </li>
                 }
@@ -74,7 +80,7 @@
                     @if (HttpContextAccessor.HttpContext.Session.GetInt32("CartCount") != null)
                     {
                         <li style="color:white;">
-                            <a href="#" class="nav-link">
+                            <a asp-controller="Cart" asp-action="Index" class="nav-link">
                                 <i class="fas fa-shopping-cart"></i>
                                 &nbsp;(@HttpContextAccessor.HttpContext.Session.GetInt32("CartCount"))
                             </a>
@@ -83,7 +89,7 @@
                     else
                     {
                         <li style="color:white;">
-                            <a href="#" class="nav-link">
+                            <a sp-controller="Cart" asp-action="Index" class="nav-link">
                                 <i class="fas fa-shopping-cart"></i>
                                 &nbsp;(0)
                             </a>
