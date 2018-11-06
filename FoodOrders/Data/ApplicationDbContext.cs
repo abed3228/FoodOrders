@@ -20,6 +20,8 @@ namespace FoodOrders.Data
         public DbSet<MenuItem> MenuItem { get; set; }
         public DbSet<Coupons> Coupons { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<ShoppingCart> shoppingCart { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -15,6 +15,7 @@ using FoodOrders.Models.AccountViewModels;
 using FoodOrders.Services;
 using FoodOrders.Data;
 using FoodOrders.Utility;
+using Microsoft.AspNetCore.Http;
 
 namespace FoodOrders.Controllers
 {
@@ -72,8 +73,12 @@ namespace FoodOrders.Controllers
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
+                
                 if (result.Succeeded)
                 {
+                    var user = _db.Users.Where(u => u.Email == model.Email).FirstOrDefault();
+                    var count= _db.shoppingCart.Where(u => u.ApplicationUserId == user.Id).ToList().Count();
+                    HttpContext.Session.SetInt32("CartCount", count);
                     _logger.LogInformation("User logged in.");
                     return RedirectToLocal(returnUrl);
                 }
@@ -260,6 +265,7 @@ namespace FoodOrders.Controllers
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
+                    HttpContext.Session.SetInt32("CartCount",0);
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
