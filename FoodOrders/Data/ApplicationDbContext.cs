@@ -19,7 +19,7 @@ namespace FoodOrders.Data
         public DbSet<SubCategory> SubCategory { get; set; }
         public DbSet<MenuItem> MenuItem { get; set; }
         public DbSet<Coupons> Coupons { get; set; }
-
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
