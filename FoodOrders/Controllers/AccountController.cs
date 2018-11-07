@@ -327,7 +327,17 @@ namespace FoodOrders.Controllers
                 ViewData["ReturnUrl"] = returnUrl;
                 ViewData["LoginProvider"] = info.LoginProvider;
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
+                var name = info.Principal.FindFirstValue(ClaimTypes.Name).Split(' ');
+              /**/  var phone = info.Principal.FindFirstValue(ClaimTypes.MobilePhone);
+
+
+                return View("ExternalLogin", new ExternalLoginViewModel {
+                    Email = email,
+                    FirstName = name[0].ToString(),
+                    LastName = name[1].ToString(),
+                    PhoneNumber = phone
+                   
+                });
             }
         }
 
@@ -344,10 +354,19 @@ namespace FoodOrders.Controllers
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName=model.FirstName,
+                    LastName=model.LastName,
+                    PhoneNumber=model.PhoneNumber
+
+                };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, SD.CustomerEndUser);
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {

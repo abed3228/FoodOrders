@@ -40,7 +40,18 @@ namespace FoodOrders
 
             //Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = "368049763736858";
+                facebookOptions.AppSecret = "e7e4723f3c9280fb03e5248915395959";
 
+            });
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = "966271824105-qp58r70chqqe1ng5hk9vbqvd8hqr8jav.apps.googleusercontent.com";
+                googleOptions.ClientSecret = "V-gwSoGrRy9FGlvK_Pgd6jMR";
+
+            });
             services.AddMvc();
 
             services.AddSession(options =>
