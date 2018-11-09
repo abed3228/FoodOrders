@@ -1,0 +1,106 @@
+﻿@model FoodOrders.Models.Branch
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<br />
+<h2>Contet Edit</h2>
+<br />
+
+<form asp-action="Edit">
+
+    <div class="form-border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="NameBranch" class="control-label"></label>
+            </div>
+            <div class="col-4">
+                <input asp-for="NameBranch" class="form-control" />
+            </div>
+            <span asp-validation-for="NameBranch" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="CityBranch" class="control-label"></label>
+            </div>
+            <div class="col-4">
+                <input asp-for="CityBranch" class="form-control" />
+            </div>
+            <span asp-validation-for="CityBranch" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="StreetBranch" class="control-label"></label>
+            </div>
+            <div class="col-4">
+                <input asp-for="StreetBranch" class="form-control" />
+            </div>
+            <span asp-validation-for="StreetBranch" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="StreetNumberBranch" class="control-label"></label>
+            </div>
+            <div class="col-4">
+                <input asp-for="StreetNumberBranch" class="form-control" />
+            </div>
+            <span asp-validation-for="StreetNumberBranch" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="OpeningHoursBranch" class="control-label"></label>
+            </div>
+            <div class="col-4">
+                <input asp-for="OpeningHoursBranch" class="form-control" />
+            </div>
+            <span asp-validation-for="OpeningHoursBranch" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="PhoneNumberBranch" class="control-label"></label>
+            </div>
+            <div class="col-4">
+                <input asp-for="PhoneNumberBranch" class="form-control" />
+            </div>
+            <span asp-validation-for="PhoneNumberBranch" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="nLatitude" class="control-label"></label>
+            </div>
+            <div class="col-4">
+                <input asp-for="nLatitude" class="form-control" />
+            </div>
+            <span asp-validation-for="nLatitude" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="nLongitude" class="control-label"></label>
+            </div>
+            <div class="col-4">
+                <input asp-for="nLongitude" class="form-control" />
+            </div>
+            <span asp-validation-for="nLongitude" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="remark" class="control-label"></label>
+            </div>
+            <div class="col-4">
+                <input asp-for="remark" class="form-control" />
+            </div>
+            <span asp-validation-for="remark" class="text-danger"></span>
+        </div>
+    </div>
+        <br />
+        <div class="form-group">
+            <input type="submit" value="Update" class="btn btn-primary" /> &nbsp;
+            <a asp-action="Details" class="btn btn-success">Back to List</a>
+        </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,93 @@
+﻿@model FoodOrders.Models.Branch
+
+@{
+    ViewData["Title"] = "Index";
+}
+<br />
+<h2>Contact</h2>
+<br />
+<div class="form-border row">
+    <div class="col-8">
+        <fieldset disabled>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="NameBranch" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="NameBranch" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="CityBranch" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="CityBranch" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="StreetBranch" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="StreetBranch" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="StreetNumberBranch" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="StreetNumberBranch" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="PhoneNumberBranch" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="PhoneNumberBranch" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="OpeningHoursBranch" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="OpeningHoursBranch" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="remark" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="remark" class="form-control" />
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="col-4">
+            <div id="map"></div>
+            <script>
+                function initMap() {
+                    var uluru = {
+                        lat: @Model.nLatitude,
+                        lng: @Model.nLongitude
+                        };
+                    var map = new google.maps.Map(
+                        document.getElementById('map'), {
+                            zoom: 16,
+                            center: uluru
+                        });
+                    var marker = new google.maps.Marker({ position: uluru, map: map });
+                }
+            </script>
+   
+            <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBBd6IbvkVSzftJLOJ0E45uRd8xjJmsTw&callback=initMap">
+            </script>
+
+    </div>
+</div>

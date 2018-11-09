@@ -242,6 +242,13 @@ namespace FoodOrders.Controllers
                     FirstName=model.FirstName,
                     LastName=model.LastName
                 };
+                /*
+                 * email:
+                 * admin@admin.com
+                 * pw:
+                 * Admin1234!
+                 * 
+                 */
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

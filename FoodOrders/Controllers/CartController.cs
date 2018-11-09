@@ -10,7 +10,7 @@ using FoodOrders.Models;
 using FoodOrders.Models.OrderDetailsViewModel;
 using FoodOrders.Utility;
 
-namespace Tangy.Controllers
+namespace FoodOrders.Controllers
 {
     public class CartController : Controller
     {

@@ -1,0 +1,123 @@
+﻿@model FoodOrders.Models.OrderDetailsViewModel.OrderListViewModel
+
+@{
+    ViewData["Title"] = "OrderHistory";
+}
+
+
+@if (Model.Orders.Count > 0)
+{
+    double[] arrCount = new double[12];
+    DateTime d = DateTime.Now;
+    var year = d.Year.ToString();
+    @foreach (var item in Model.Orders)
+    {
+
+        var yearItem = item.OrderHeader.OrderDate.Year.ToString();
+        var monthItem = item.OrderHeader.OrderDate.Month.ToString();
+
+        var status = item.OrderHeader.Status.ToString();
+        if (status.CompareTo("Completed") == 0 && yearItem.CompareTo(year) == 0)
+        {
+            if (monthItem.CompareTo("1") == 0)
+            {
+                arrCount[0] += item.OrderHeader.OrderTotal;
+            }
+            else if (monthItem.CompareTo("2") == 0)
+            {
+                arrCount[1] += item.OrderHeader.OrderTotal;
+
+            }
+            else if (monthItem.CompareTo("3") == 0)
+            {
+                arrCount[2] += item.OrderHeader.OrderTotal;
+
+            }
+            else if (monthItem.CompareTo("4") == 0)
+            {
+                arrCount[3] += item.OrderHeader.OrderTotal;
+
+            }
+            else if (monthItem.CompareTo("5") == 0)
+            {
+                arrCount[4] += item.OrderHeader.OrderTotal;
+
+            }
+            else if (monthItem.CompareTo("6") == 0)
+            {
+                arrCount[5] += item.OrderHeader.OrderTotal;
+
+            }
+            else if (monthItem.CompareTo("7") == 0)
+            {
+                arrCount[6] += item.OrderHeader.OrderTotal;
+
+            }
+            else if (monthItem.CompareTo("8") == 0)
+            {
+                arrCount[7] += item.OrderHeader.OrderTotal;
+
+            }
+            else if (monthItem.CompareTo("9") == 0)
+            {
+                arrCount[8] += item.OrderHeader.OrderTotal;
+
+            }
+            else if (monthItem.CompareTo("10") == 0)
+            {
+                arrCount[9] += item.OrderHeader.OrderTotal;
+
+            }
+            else if (monthItem.CompareTo("11") == 0)
+            {
+                arrCount[10] += item.OrderHeader.OrderTotal;
+
+            }
+            else if (monthItem.CompareTo("12") == 0)
+            {
+                arrCount[11] += item.OrderHeader.OrderTotal;
+
+            }
+        }
+    }
+    
+
+<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+<div>
+    <h2>statistics in last year</h2>
+    <script>
+        var data = [@arrCount[0],@arrCount[1],@arrCount[2],@arrCount[3],
+                    @arrCount[4],@arrCount[5],@arrCount[6],@arrCount[7],
+                    @arrCount[8],@arrCount[9],@arrCount[10],@arrCount[11]]
+                   
+        var width = 500, barHeight = 20, margin = 1;
+        var scale = d3.scaleLinear()
+            .domain([d3.min(data), d3.max(data)])
+            .range([100, 400]);
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", barHeight * data.length);
+
+        var g = svg.selectAll("g")
+            .data(data)
+            .enter()
+            .append("g")
+            .attr("transform", function (d, i) {
+                return "translate(0," + i * barHeight + ")";
+            });
+
+        g.append("rect")
+            .attr("width", function (d) {
+                return scale(d);
+            })
+
+            .attr("height", barHeight - margin)
+        g.append("text")
+            .attr("x", function (d) { return (scale(d)); })
+            .attr("y", barHeight / 2).attr("dy", ".35em")
+            .text(function (d) { return d; });
+    </script>
+</div>
+}

@@ -23,6 +23,8 @@ namespace FoodOrders.Data
         public DbSet<ShoppingCart> shoppingCart { get; set; }
         public DbSet<OrderDetails> orderDetails { get; set; }
         public DbSet<OrderHeader> orderHeader { get; set; }
+        public DbSet<Branch> Branch { get; set; }
+
 
 
 
