@@ -80,44 +80,123 @@
             }
         }
     }
-    
+    <link rel="stylesheet" href="~/css/lastYear.css" />
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <svg id="barChart"></svg>
+        <script>
 
-<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
-<div>
-    <h2>statistics in last year</h2>
-    <script>
-        var data = [@arrCount[0],@arrCount[1],@arrCount[2],@arrCount[3],
-                    @arrCount[4],@arrCount[5],@arrCount[6],@arrCount[7],
-                    @arrCount[8],@arrCount[9],@arrCount[10],@arrCount[11]]
-                   
-        var width = 500, barHeight = 20, margin = 1;
-        var scale = d3.scaleLinear()
-            .domain([d3.min(data), d3.max(data)])
-            .range([100, 400]);
+            var data = [
+                {
+                    Product: "Dec",
+                    Count: @arrCount[11]
+                }, {
+                    Product: "Nov",
+                    Count: @arrCount[10]
+                }, {
+                    Product: "Oct",
+                    Count: @arrCount[9]
+                }, {
+                    Product: "Sep",
+                    Count: @arrCount[8]
+                }, {
+                    Product: "Aug",
+                    Count: @arrCount[7]
+                }, {
+                    Product: "Jul",
+                    Count: @arrCount[6]
+                },{
+                    Product: "Jun",
+                    Count: @arrCount[5]
+                }, {
+                    Product: "May",
+                    Count: @arrCount[4]
+                }, {
+                    Product: "Apr",
+                    Count: @arrCount[3]
+                }, {
+                    Product: "Mar",
+                    Count: @arrCount[2]
+                }, {
+                    Product: "Feb",
+                    Count: @arrCount[1]
+                }, {
+                    Product: "Jan",
+                    Count: @arrCount[0]
+                }];
 
-        var svg = d3.select("body")
-            .append("svg")
-            .attr("width", width)
-            .attr("height", barHeight * data.length);
 
-        var g = svg.selectAll("g")
-            .data(data)
-            .enter()
-            .append("g")
-            .attr("transform", function (d, i) {
-                return "translate(0," + i * barHeight + ")";
-            });
+            var margin = {
+                top: 10,
+                right: 10,
+                bottom: 70,
+                left: 100
+            },
+                width = 900 - margin.left - margin.right,
+                height = 550 - margin.top - margin.bottom;
 
-        g.append("rect")
-            .attr("width", function (d) {
-                return scale(d);
-            })
 
-            .attr("height", barHeight - margin)
-        g.append("text")
-            .attr("x", function (d) { return (scale(d)); })
-            .attr("y", barHeight / 2).attr("dy", ".35em")
-            .text(function (d) { return d; });
-    </script>
-</div>
+            var x = d3.scale.ordinal()
+                .rangeRoundBands([width, 0], 0.1);
+
+            var y = d3.scale.linear()
+                .range([0, height]);
+
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom");
+
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left")
+                .tickFormat(d3.format("d"))
+                .tickSubdivide(0);
+
+
+            var svg = d3.select("svg#barChart")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            x.domain(data.map(function (d) {
+                return d.Product;
+            }));
+
+            y.domain([d3.max(data, function (d) {
+                return d.Count;
+            }), 0]);
+
+            svg.append("g")
+                .attr("class", "y axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis)
+                .selectAll("text")
+                .attr("transform", "rotate(90)")
+                .attr("x", 0)
+                .attr("y", -6)
+                .attr("dx", ".6em")
+                .style("text-anchor", "start");
+
+            svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis);
+
+            svg.selectAll(".bar")
+                .data(data)
+                .enter().append("rect")
+                .attr("class", "bar")
+
+                .attr("x", function (d) {
+                    return x(d.Product);
+                })
+                .attr("width", x.rangeBand())
+                .attr("y", function (d) {
+                    return y(d.Count);
+                })
+                .attr("height", function (d) {
+                    return height - y(d.Count);
+                });
+
+        </script>
+
 }

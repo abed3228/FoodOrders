@@ -112,6 +112,33 @@ namespace FoodOrders.Controllers
         
             return View(orderListVM);
         }
+        [Authorize]
+        public IActionResult LestWeek()
+        {
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            OrderListViewModel orderListVM = new OrderListViewModel()
+            {
+                Orders = new List<OrderDetailsViewModel>()
+            };
+
+            List<OrderHeader> OrderHeaderList = _db.orderHeader.ToList();
+
+            foreach (OrderHeader item in OrderHeaderList)
+            {
+                OrderDetailsViewModel individual = new OrderDetailsViewModel
+                {
+                    OrderHeader = item,
+                    OrderDetail = _db.orderDetails.ToList()
+                };
+                orderListVM.Orders.Add(individual);
+            }
+            var count = orderListVM.Orders.Count;
+
+            return View(orderListVM);
+        }
+
         [Authorize(Roles = SD.AdminEndUser)]
         public IActionResult ManageOrder()
         {

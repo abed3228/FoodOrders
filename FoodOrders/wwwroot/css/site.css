@@ -76,3 +76,28 @@ html {
     height: 94%; /* The height is 400 pixels */
     width: 100%; /* The width is the width of the web page */
 }
+
+/*last week*/
+
+    body {
+        font: 10px sans-serif;
+    }
+
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+
+    .line {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+    }
+
+    .dot {
+        fill: white;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+    }

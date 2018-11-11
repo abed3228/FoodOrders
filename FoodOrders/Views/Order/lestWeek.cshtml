@@ -1,0 +1,119 @@
+﻿@model FoodOrders.Models.OrderDetailsViewModel.OrderListViewModel
+
+
+
+@if (Model.Orders.Count > 0)
+{
+    double[] count = new double[7];
+    DateTime[] days = new DateTime[7];
+    DateTime d = DateTime.Now;
+    var year = d.Year.ToString();
+    var month = d.Month.ToString();
+    var day = d.Day.ToString();
+    double max = 0;
+    for (int i = 0; i < 7; i++)
+    {
+        count[i] = 0;
+        days[i] = d;
+        d = d.AddDays(-1);
+    }
+
+    @foreach (var item in Model.Orders)
+    {
+
+        var yearItem = item.OrderHeader.OrderDate.Year.ToString();
+        var monthItem = item.OrderHeader.OrderDate.Month.ToString();
+        var dayItem = item.OrderHeader.OrderDate.Day.ToString();
+        var status = item.OrderHeader.Status.ToString();
+
+
+        if (status.CompareTo("Completed") == 0)
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                if (yearItem.CompareTo(days[i].Year.ToString()) == 0 &&
+                    monthItem.CompareTo(days[i].Month.ToString()) == 0 &&
+                    dayItem.CompareTo(days[i].Day.ToString()) == 0)
+                {
+                    count[i] += item.OrderHeader.OrderTotal;
+                    if (count[i] > max)
+                    {
+                        max = count[i];
+                    }
+                }
+            }
+        }
+    }
+        <link rel="stylesheet" href="~/css/lastWeek.css" />
+        <script src="//d3js.org/d3.v3.min.js"></script>
+        <script >
+            var yaer
+            var data = [
+                [new Date(@days[0].Day), @count[0]],
+                [new Date(@days[1].Day), @count[1]],
+                [new Date(@days[2].Day), @count[2]],
+                [new Date(@days[3].Day), @count[3]],
+                [new Date(@days[4].Day), @count[4]],
+                [new Date(@days[5].Day), @count[5]],
+                [new Date(@days[6].Day), @count[6]],
+
+            ];
+
+            var margin = { top: 20, right: 30, bottom: 30, left: 100 },
+                width = 960 - margin.left - margin.right,
+                height = 500 - margin.top - margin.bottom;
+
+            var x = d3.time.scale()
+                .domain([new Date(@days[0].Day), new Date(@days[6].Day)])
+                .range([0, width]);
+
+            var y = d3.scale.linear()
+                .domain([0, @max])
+                .range([height, 0]);
+
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom");
+
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left");
+
+            var line = d3.svg.line()
+                .interpolate("monotone")
+                .x(function (d) { return x(d[0]); })
+                .y(function (d) { return y(d[1]); });
+
+            var svg = d3.select("body").append("svg")
+                .datum(data)
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+            svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis);
+
+            svg.append("path")
+                .attr("class", "line")
+                .attr("d", line);
+
+            svg.selectAll(".dot")
+                .data(data)
+                .enter().append("circle")
+                .attr("class", "dot")
+                .attr("cx", line.x())
+                .attr("cy", line.y())
+                .attr("r", 3.5);
+
+        </script>
+
+
+
+        }
